@@ -14,7 +14,7 @@ public class MovieTicketBookingManagement extends Application {
     private double y=0;
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root =FXMLLoader.load(getClass().getResource("loginSignup.fxml"));
+        Parent root =FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
