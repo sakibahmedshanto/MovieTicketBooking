@@ -1,8 +1,8 @@
-module com.example.movieticketmanagementapp {
+module org.example.cinehub {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.movieticketmanagementapp to javafx.fxml;
-    exports com.example.movieticketmanagementapp;
+    opens org.example.cinehub to javafx.fxml;
+    exports org.example.cinehub;
 }
