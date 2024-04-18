@@ -3,13 +3,14 @@ package org.example.cinehub;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentcontroller implements Initializable {
@@ -49,6 +50,52 @@ public class FXMLDocumentcontroller implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle rb){}
+
+
+        private Connection connect;
+        private PreparedStatement prepare;
+        private Statement statement;
+        private ResultSet result;
+
+        public void signin(){
+                String sql = "SELECT * FROM admin where username =? and password=?";
+                connect= database.connectDb();
+                try {
+                        prepare= connect.prepareStatement(sql);
+                        prepare.setString(1,signin_username.getText());
+                        prepare.setString(2,signin_password.getText());
+
+                        result = prepare.executeQuery();
+
+                        Alert alert;
+                        if(signin_username.getText().isEmpty()||signin_password.getText().isEmpty()){
+                                alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Empty USER/PASSWORD");
+                                alert.setHeaderText(null);
+                                alert.showAndWait();
+                        }
+                        else {
+                                if(result.next()){
+                                        alert=new Alert(Alert.AlertType.INFORMATION);
+                                        alert.setTitle("Information Message");
+                                        alert.setHeaderText(null);
+                                        alert.setContentText("Succesful Login");
+                                        alert.showAndWait();
+                                }else{
+                                        alert=new Alert(Alert.AlertType.ERROR);
+                                        alert.setTitle("ERROR Message");
+                                        alert.setHeaderText(null);
+                                        alert.setContentText("Wrong Username/Password");
+                                        alert.showAndWait();
+                                }
+                        }
+                }
+                catch (Exception e){
+                        e.printStackTrace();
+                }
+        }
+
+
 
         public void switchForm(ActionEvent event){
                 if(event.getSource() == signin_createAccount){
