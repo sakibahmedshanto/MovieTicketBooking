@@ -30,7 +30,7 @@
       <AnchorPane fx:id="signUp_form" prefHeight="400.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@designLogin.css">
          <children>
             <TextField fx:id="signUp_username" layoutX="226.0" layoutY="175.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
-            <Button fx:id="signUp_btn" layoutX="250.0" layoutY="267.0" mnemonicParsing="false" text="Sign Up">
+            <Button fx:id="signUp_btn" layoutX="250.0" layoutY="267.0" mnemonicParsing="false" onAction="#signup" onMouseClicked="#signup" text="Sign Up">
                <font>
                   <Font name="David Libre Regular" size="22.0" />
                </font>

@@ -2,9 +2,13 @@ package org.example.cinehub;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -54,8 +58,61 @@ public class FXMLDocumentcontroller implements Initializable {
 
         private Connection connect;
         private PreparedStatement prepare;
+
+        private  PreparedStatement prepare2;
         private Statement statement;
         private ResultSet result;
+
+
+        public void signup(){
+                String sql= "INSERT INTO admin (email,username,password) VALUES (?,?,?)";
+                connect = database.connectDb();
+                try {
+                        prepare= connect.prepareStatement(sql);
+                        prepare.setString(1,signUp_email.getText());
+                        prepare.setString(2,signUp_username.getText());
+                        prepare.setString(3,signUp_password.getText());
+                        //alert making
+                        Alert alert;
+                        if(signUp_username.getText().isEmpty()||signUp_password.getText().isEmpty()||signUp_email.getText().isEmpty()){
+                                alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error Message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Please Fill All Blank Field");
+                                alert.showAndWait();
+                        }
+                        else if (signUp_password.getText().length() < 8) {
+                                alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error Message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Invalid Password");
+                                alert.showAndWait();
+                        }
+                        // here to implement a email vallidator 1:15 - 1:29
+                      else{
+
+                              //executing the prepared query
+                                prepare.execute();
+
+
+                                alert = new Alert (Alert.AlertType.INFORMATION);
+                                alert.setTitle("Information Message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Succesfully Created a new account");
+                                alert.showAndWait();
+                               //clearing the text fields
+
+                                signUp_email.setText("");
+                                signUp_username.setText("");
+                                signUp_password.setText("");
+
+                }
+
+                }catch (Exception e){
+                        e.printStackTrace();
+                }
+        }
+
 
         public void signin(){
                 String sql = "SELECT * FROM admin where username =? and password=?";
@@ -81,6 +138,16 @@ public class FXMLDocumentcontroller implements Initializable {
                                         alert.setHeaderText(null);
                                         alert.setContentText("Succesful Login");
                                         alert.showAndWait();
+
+                                        //to hide the login form
+                                        signin_loginBtn.getScene().getWindow().hide();
+
+                                        //to go to dashboard
+                                        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+                                        Stage stage=new Stage();
+                                        Scene scene=new Scene(root);
+                                        stage.setScene(scene);
+
                                 }else{
                                         alert=new Alert(Alert.AlertType.ERROR);
                                         alert.setTitle("ERROR Message");
