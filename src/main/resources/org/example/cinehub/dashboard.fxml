@@ -41,16 +41,16 @@
                                 <Font name="Microsoft Sans Serif" size="17.0" />
                             </font>
                         </Label>
-                        <Label id="username" alignment="CENTER" layoutX="70.0" layoutY="180.0" text="Admin" textFill="#faf8f8">
+                        <Label id="username" fx:id="username" alignment="CENTER" layoutX="70.0" layoutY="180.0" text="Admin" textFill="#faf8f8">
                             <font>
                                 <Font name="Microsoft Sans Serif" size="20.0" />
                             </font>
                         </Label>
-                        <Button id="dashboard_btn" layoutX="12.0" layoutY="269.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Dashboard" />
-                        <Button id="addMovies_btn" layoutX="12.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Add Movies" />
-                        <Button id="availableMovies_btn" layoutX="12.0" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Available Movies" />
-                        <Button id="editScreening_btn" layoutX="12.0" layoutY="374.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Edit Screening" />
-                        <Button id="customers_btn" layoutX="12.0" layoutY="409.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Customers" />
+                        <Button id="dashboard_btn" fx:id="dashboardBtn" layoutX="12.0" layoutY="269.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Dashboard" />
+                        <Button id="addMovies_btn" fx:id="addMovieBtn" layoutX="12.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Add Movies" />
+                        <Button id="availableMovies_btn" fx:id="availableMoviesBtn" layoutX="12.0" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Available Movies" />
+                        <Button id="editScreening_btn" fx:id="editScreeningBtn" layoutX="12.0" layoutY="374.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Edit Screening" />
+                        <Button id="customers_btn" fx:id="customerBtn" layoutX="12.0" layoutY="409.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Customers" />
                         <Button fx:id="signout" layoutX="14.0" layoutY="601.0" mnemonicParsing="false" styleClass="signout" stylesheets="@designDashboard.css" />
                         <Label layoutX="68.0" layoutY="607.0" prefHeight="18.0" prefWidth="67.0" text="SIgn Out" textFill="#f2eded">
                             <font>
@@ -303,7 +303,7 @@
                               <Button fx:id="availableMovie_clearBtn" layoutX="296.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
                                     </children></AnchorPane>
                             </children></AnchorPane>
-                  <AnchorPane id="editScreening_form" layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane id="editScreening_form" layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="250.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
