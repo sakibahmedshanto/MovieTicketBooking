@@ -193,7 +193,7 @@
 
 .info-card{
     -fx-border-color:#ae2d3c;
-    -fx-border-radius:10px 0px 0px 10px;
+    -fx-border-radius:0px 5px 0px 0px;
 }
 
 .label-info{
@@ -234,5 +234,23 @@
     -fx-background-color:#d39948;
 }
 
+.combo-box{
+    -fx-background-color:#fff;
+    -fx-background-radius:5px;
+    -fx-border-color:#1e242e;
+    -fx-border-width:.5px;
+    -fx-border-radius:5px;
+}
 
---forgot password,no username only email,select seat
+.combo-box:focused{
+    -fx-border-color:#ae2d3c;
+    -fx-border-width:1px;
+}
+
+.card-customer{
+    -fx-background-color:#fff;
+    -fx-background-radius:5px;
+    -fx-border-color:#ae2d3c;
+    -fx-border-width:.8px;
+    -fx-border-radius:5px;
+}
