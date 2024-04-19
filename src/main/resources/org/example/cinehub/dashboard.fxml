@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="691.0" prefWidth="1141.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cinehub.dashboardcontroller">
+    <children>
+        <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="691.0" prefWidth="935.0" stylesheets="@designDashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <AnchorPane prefHeight="44.0" prefWidth="935.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane id="coo" layoutX="-43.0" layoutY="-78.0" prefHeight="39.0" prefWidth="935.0" stylesheets="@designDashboard.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <Button fx:id="cross" layoutX="883.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#closeclicked" prefHeight="24.0" prefWidth="52.0" styleClass="close" stylesheets="@designDashboard.css" AnchorPane.rightAnchor="0.20000000000004547" AnchorPane.topAnchor="1.0" />
+                                <Button fx:id="minimize" layoutX="1056.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#mkr" prefHeight="14.0" prefWidth="54.0" styleClass="minimize" stylesheets="@designDashboard.css" />
+                                <Label layoutX="25.0" layoutY="11.0" text=" Movie Ticket Booking Management">
+                                    <font>
+                                        <Font name="Microsoft Sans Serif" size="13.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@designDashboard.css" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label layoutX="59.0" layoutY="152.0" text="Welcome!!" textFill="#fcfafa">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="17.0" />
+                            </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="70.0" layoutY="180.0" text="Admin" textFill="#faf8f8">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="20.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="12.0" layoutY="269.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Dashboard" />
+                        <Button layoutX="12.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Add Movies" />
+                        <Button layoutX="12.0" layoutY="339.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Available Movies" />
+                        <Button layoutX="12.0" layoutY="374.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Edit Screening" />
+                        <Button layoutX="12.0" layoutY="409.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Customers" />
+                        <Button layoutX="14.0" layoutY="601.0" mnemonicParsing="false" styleClass="signout" stylesheets="@designDashboard.css" />
+                        <Label layoutX="68.0" layoutY="607.0" prefHeight="18.0" prefWidth="67.0" text="SIgn Out" textFill="#f2eded">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="15.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </left>
+            <center>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane layoutX="93.0" layoutY="207.0" prefHeight="647.0" prefWidth="818.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-44.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="196.0" prefWidth="816.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                    <children>
+                                        <AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="186.0" prefWidth="280.0" stylesheets="@designDashboard.css">
+                                            <children>
+                                                <AnchorPane layoutX="-1.0" prefHeight="185.0" prefWidth="90.0" styleClass="card1-left" stylesheets="@designDashboard.css" />
+                                                <Label layoutX="103.0" layoutY="150.0" text="Sold Tickets Today" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label alignment="CENTER_RIGHT" layoutX="103.0" layoutY="14.0" prefHeight="28.0" prefWidth="165.0" text="1500" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Berlin Sans FB" size="30.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                            <styleClass>
+                                                <String fx:value="card" />
+                                                <String fx:value="card1" />
+                                            </styleClass></AnchorPane>
+                                        <AnchorPane layoutX="634.0" layoutY="5.0" prefHeight="186.0" prefWidth="280.0" stylesheets="@designDashboard.css">
+                                            <children>
+                                                <AnchorPane layoutX="-1.0" prefHeight="185.0" prefWidth="90.0" styleClass="card3-left" stylesheets="@designDashboard.css" />
+                                                <Label layoutX="115.0" layoutY="150.0" text="Available Movies" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label alignment="CENTER_RIGHT" layoutX="100.0" layoutY="14.0" prefHeight="28.0" prefWidth="165.0" text="1500" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Berlin Sans FB" size="30.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                            <styleClass>
+                                                <String fx:value="card" />
+                                                <String fx:value="card3" />
+                                            </styleClass>
+                                        </AnchorPane>
+                                        <AnchorPane layoutX="318.0" layoutY="5.0" prefHeight="186.0" prefWidth="280.0" stylesheets="@designDashboard.css">
+                                            <children>
+                                                <AnchorPane layoutX="-1.0" prefHeight="185.0" prefWidth="90.0" styleClass="card2-left" stylesheets="@designDashboard.css" />
+                                                <Label layoutX="113.0" layoutY="150.0" text="Total Earn Today" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label alignment="CENTER_RIGHT" layoutX="100.0" layoutY="14.0" prefHeight="28.0" prefWidth="165.0" text="1500" textFill="#faf8f8">
+                                                    <font>
+                                                        <Font name="Berlin Sans FB" size="30.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                            <styleClass>
+                                                <String fx:value="card" />
+                                                <String fx:value="card2" />
+                                            </styleClass>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="76.0" layoutY="147.0" prefHeight="647.2" prefWidth="941.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="286.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                    <children>
+                                        <AnchorPane layoutX="65.0" layoutY="27.0" prefHeight="167.0" prefWidth="127.0" styleClass="bg-white" stylesheets="@designDashboard.css" AnchorPane.rightAnchor="65.40000000000003">
+                                            <children>
+                                                <ImageView fitHeight="167.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                            </children>
+                                        </AnchorPane>
+                                        <Button layoutX="131.0" layoutY="203.0" mnemonicParsing="false" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Import" />
+                                        <Label layoutX="24.0" layoutY="295.0" text="Movie Title :" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="188.0">
+                                            <font>
+                                                <Font name="Microsoft Sans Serif" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField layoutX="105.0" layoutY="290.0" prefHeight="26.0" prefWidth="171.0" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="106.0" />
+                                        <Label layoutX="59.0" layoutY="327.0" text="Genre :" AnchorPane.rightAnchor="188.0">
+                                            <font>
+                                                <Font name="Microsoft Sans Serif" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField layoutX="105.0" layoutY="322.0" prefHeight="25.0" prefWidth="171.0" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="106.0" />
+                                        <Label layoutX="42.0" layoutY="359.0" text="Duration :" AnchorPane.rightAnchor="188.0">
+                                            <font>
+                                                <Font name="Microsoft Sans Serif" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField layoutX="105.0" layoutY="354.0" prefHeight="25.0" prefWidth="171.0" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="106.0" />
+                                        <Label layoutX="13.0" layoutY="391.0" text="Published Date :" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="188.0">
+                                            <font>
+                                                <Font name="Microsoft Sans Serif" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField layoutX="105.0" layoutY="386.0" prefHeight="25.0" prefWidth="171.0" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="106.0" />
+                                        <Button layoutX="11.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Insert" textFill="#fcfbfb">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font></Button>
+                                        <Button layoutX="102.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
+                                        <Button layoutX="193.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
+                                        <Button layoutX="193.0" layoutY="479.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane layoutX="308.8" layoutY="14.0" prefHeight="622.0" prefWidth="654.0" styleClass="bg-white" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="309.0">
+                                    <children>
+                                        <TableView layoutX="12.0" layoutY="58.0" prefHeight="551.0" prefWidth="632.0">
+                                            <columns>
+                                                <TableColumn prefWidth="209.59997272491455" text="Movie Title" />
+                                                <TableColumn prefWidth="132.00001525878906" text="Genre" />
+                                                <TableColumn prefWidth="119.20001220703125" text="Duration" />
+                                                <TableColumn prefWidth="172.0" text="Published Date" />
+                                            </columns>
+                                        </TableView>
+                                        <TextField layoutX="14.0" layoutY="22.0" promptText="Search" styleClass="search" stylesheets="@designDashboard.css" />
+                                    </children></AnchorPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="54.0" layoutY="50.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="934.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                    <children>
+                                        <AnchorPane prefHeight="200.0" prefWidth="264.0" styleClass="info-card" stylesheets="@designDashboard.css" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <Label layoutX="14.0" layoutY="23.0" text="Movie Title :">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="94.0" layoutY="14.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="41.0" layoutY="66.0" text="Genre :" AnchorPane.leftAnchor="41.0">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="94.0" layoutY="57.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="50.0" layoutY="107.0" text="Date :" AnchorPane.leftAnchor="50.0">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="94.0" layoutY="100.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                    <font>
+                                                        <Font name="Microsoft Sans Serif" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Button layoutX="83.0" layoutY="150.0" mnemonicParsing="false" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Select Movie" />
+                                            </children>
+                                        </AnchorPane>
+                              <TableView layoutX="272.0" prefHeight="200.0" prefWidth="662.0">
+                                <columns>
+                                  <TableColumn prefWidth="244.0" text="Movie Title" />
+                                  <TableColumn prefWidth="220.79998779296875" text="Genre" />
+                                    <TableColumn prefWidth="202.400146484375" text="Showing Date" />
+                                </columns>
+                              </TableView>
+                                    </children></AnchorPane>
+                                <AnchorPane layoutX="14.0" layoutY="234.0" prefHeight="399.0" prefWidth="934.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                    <children>
+                                        <AnchorPane prefHeight="399.0" prefWidth="264.0" styleClass="info-card" stylesheets="@designDashboard.css">
+                                 <children>
+                                    <AnchorPane layoutX="57.0" layoutY="26.0" prefHeight="180.0" prefWidth="135.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                       <children>
+                                          <ImageView fitHeight="180.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label alignment="CENTER" layoutX="-5.0" layoutY="238.0" prefHeight="22.0" prefWidth="258.0" text="Label">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="110.0" layoutY="272.0" text="Title">
+                                       <font>
+                                          <Font name="Microsoft Sans Serif" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children></AnchorPane>
+                              <Label layoutX="448.0" layoutY="54.0" text="Quantity">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="611.0" layoutY="54.0" text="Price">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="282.0" layoutY="14.0" text="Purchase Ticket">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="305.0" layoutY="112.0" text="Special Class :">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="305.0" layoutY="154.0" text="Special Class :">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Spinner layoutX="432.0" layoutY="109.0" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
+                              <Spinner layoutX="432.0" layoutY="150.0" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
+                              <Label layoutX="611.0" layoutY="111.0" text="BDT 0.0">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="611.0" layoutY="153.0" text="BDT 0.0">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="736.0" layoutY="188.0" text="Total :">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="801.0" layoutY="188.0" text="BDT 0.0">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="833.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="buy-btn" stylesheets="@designDashboard.css" text="Buy" />
+                              <Button layoutX="736.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="receipt-btn" stylesheets="@designDashboard.css" text="Receipt" />
+                              <Button layoutX="296.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                                    </children></AnchorPane>
+                            </children></AnchorPane>
+                  <AnchorPane layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="250.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                           <children>
+                              <AnchorPane layoutX="56.0" layoutY="21.0" prefHeight="183.0" prefWidth="138.0" styleClass="bg-white" stylesheets="@designDashboard.css">
+                                 <children>
+                                    <ImageView fitHeight="183.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </AnchorPane>
+                              <Label alignment="CENTER" layoutX="9.0" layoutY="214.0" prefHeight="22.0" prefWidth="231.0" text="Label">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="111.0" layoutY="245.0" text="Title">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox layoutX="93.0" layoutY="308.0" prefHeight="31.0" prefWidth="142.0" promptText="Choose" styleClass="spinner" stylesheets="@designDashboard.css" />
+                              <Label layoutX="29.0" layoutY="314.0" text="Current :">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="280.0" layoutY="14.0" prefHeight="622.0" prefWidth="670.0" styleClass="bg-white" stylesheets="@designDashboard.css" />
+                     </children>
+                  </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
