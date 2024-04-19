@@ -147,6 +147,7 @@ public class FXMLDocumentcontroller implements Initializable {
                                         Stage stage=new Stage();
                                         Scene scene=new Scene(root);
                                         stage.setScene(scene);
+                                        stage.show();
 
                                 }else{
                                         alert=new Alert(Alert.AlertType.ERROR);
