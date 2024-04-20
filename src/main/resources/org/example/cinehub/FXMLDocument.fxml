@@ -29,15 +29,15 @@
       </AnchorPane>
       <AnchorPane fx:id="signUp_form" prefHeight="400.0" prefWidth="600.0" styleClass="bg-form" stylesheets="@designLogin.css">
          <children>
-            <TextField fx:id="signUp_username" layoutX="226.0" layoutY="175.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
-            <Button fx:id="signUp_btn" layoutX="250.0" layoutY="267.0" mnemonicParsing="false" onAction="#signup" onMouseClicked="#signup" text="Sign Up">
+            <TextField fx:id="signUp_username" layoutX="225.0" layoutY="187.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
+            <Button fx:id="signUp_btn" layoutX="248.0" layoutY="279.0" mnemonicParsing="false" onAction="#signup" onMouseClicked="#signup" text="Sign Up">
                <font>
                   <Font name="David Libre Regular" size="22.0" />
                </font>
             </Button>
             <Hyperlink fx:id="signUp_alreadyHaveAccount" layoutX="230.0" layoutY="347.0" onAction="#switchForm" stylesheets="@designLogin.css" text="Already have an account?" />
-            <TextField fx:id="signUp_email" layoutX="226.0" layoutY="144.0" promptText="Email Address" styleClass="textfield" stylesheets="@designLogin.css" />
-            <PasswordField fx:id="signUp_password" layoutX="226.0" layoutY="215.0" promptText="Password" styleClass="textfield" />
+            <TextField fx:id="signUp_email" layoutX="225.0" layoutY="153.0" promptText="Email Address" styleClass="textfield" stylesheets="@designLogin.css" />
+            <PasswordField fx:id="signUp_password" layoutX="226.0" layoutY="223.0" promptText="Password" styleClass="textfield" />
             <Label layoutX="237.0" layoutY="81.0" text="Sign Up" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="29.0" />

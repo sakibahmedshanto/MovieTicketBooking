@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.w3c.dom.events.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -113,6 +115,9 @@ public class FXMLDocumentcontroller implements Initializable {
                 }
         }
 
+        private double x=0;
+        private double y=0;
+
 
         public void signin(){
                 String sql = "SELECT * FROM admin where username =? and password=?";
@@ -133,6 +138,7 @@ public class FXMLDocumentcontroller implements Initializable {
                         }
                         else {
                                 if(result.next()){
+                                        getData.username=signin_username.getText();
                                         alert=new Alert(Alert.AlertType.INFORMATION);
                                         alert.setTitle("Information Message");
                                         alert.setHeaderText(null);
@@ -144,8 +150,22 @@ public class FXMLDocumentcontroller implements Initializable {
 
                                         //to go to dashboard
                                         Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+
                                         Stage stage=new Stage();
                                         Scene scene=new Scene(root);
+                                        /*
+                                        root.setOnMousePressed((MouseEvent event) ->{
+                                                x = event.getSceneX();
+                                                y=event.getSceneY();
+                                        });
+
+                                        root.setOnMouseDragged((MouseEvent event) ->{
+                                                stage.setX(event.getScreenX() - x);
+                                                stage.setY(event.getScreenY() - y);
+                                        });
+                                        */
+
+                                        stage.initStyle(StageStyle.TRANSPARENT);
                                         stage.setScene(scene);
                                         stage.show();
 
