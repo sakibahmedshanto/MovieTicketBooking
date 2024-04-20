@@ -18,6 +18,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.sql.*;
 
 public class FXMLDocumentcontroller implements Initializable {
 
@@ -65,9 +68,30 @@ public class FXMLDocumentcontroller implements Initializable {
         private Statement statement;
         private ResultSet result;
 
+        public boolean validEmail(){
+                Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                Matcher match = pattern.matcher(signUp_email.getText());
+
+                if(match.find()){
+                        return true;
+                } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("ERROR MESSAGE");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Invalid Email");
+                        alert.showAndWait();
+                        return false;
+                }
+        }
+
 
         public void signup(){
                 String sql= "INSERT INTO admin (email,username,password) VALUES (?,?,?)";
+
+                //to check existing user
+                String sql1= "SELECT username FROM ADMIN WHERE username = ?";
+
+
                 connect = database.connectDb();
                 try {
                         prepare= connect.prepareStatement(sql);
@@ -90,23 +114,50 @@ public class FXMLDocumentcontroller implements Initializable {
                                 alert.setContentText("Invalid Password");
                                 alert.showAndWait();
                         }
-                        // here to implement a email vallidator 1:15 - 1:29
-                      else{
+                        else{
+                                // here to implement a email vallidator 1:15 - 1:29
+                             if (validEmail()) {
 
-                              //executing the prepared query
-                                prepare.execute();
+                                     //checking existing user
+
+                                     try (PreparedStatement prepare2 = connect.prepareStatement(sql1)) {
+                                             prepare2.setString(1, signUp_username.getText());
+                                             try (ResultSet result2 = prepare2.executeQuery()) {
+                                                     if (result2.next()) {
+                                                             alert = new Alert(Alert.AlertType.ERROR);
+                                                             alert.setTitle("Error Message");
+                                                             alert.setHeaderText(null);
+                                                             alert.setContentText(signUp_username.getText() + " Already Exists");  // Set content text, not header text
+                                                             alert.showAndWait();
+                                                     } else {
+                                                             //executing the prepared query
+                                                             prepare.execute();
+
+                                                             alert = new Alert(Alert.AlertType.INFORMATION);
+                                                             alert.setTitle("Information Message");
+                                                             alert.setHeaderText(null);
+                                                             alert.setContentText("Succesfully Created a new account");
+                                                             alert.showAndWait();
+                                                             //clearing the text fields
+
+                                                             signUp_email.setText("");
+                                                             signUp_username.setText("");
+                                                             signUp_password.setText("");
+                                                     }
+                                             }
+                                     } catch (SQLException e) {
+                                             e.printStackTrace();
+                                             alert = new Alert(Alert.AlertType.ERROR);
+                                             alert.setTitle("Database Error");
+                                             alert.setHeaderText(null);
+                                             alert.setContentText("Error checking username: " + e.getMessage());
+                                             alert.showAndWait();
+                                     }
 
 
-                                alert = new Alert (Alert.AlertType.INFORMATION);
-                                alert.setTitle("Information Message");
-                                alert.setHeaderText(null);
-                                alert.setContentText("Succesfully Created a new account");
-                                alert.showAndWait();
-                               //clearing the text fields
 
-                                signUp_email.setText("");
-                                signUp_username.setText("");
-                                signUp_password.setText("");
+                                }
+
 
                 }
 
