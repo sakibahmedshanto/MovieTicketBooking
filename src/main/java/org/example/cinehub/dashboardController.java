@@ -1,5 +1,7 @@
 package org.example.cinehub;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +23,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
@@ -73,7 +80,7 @@ public class dashboardController implements Initializable {
     private TextField addMovies_search;
 
     @FXML
-    private TableView<?> addMovies_tableView;
+    private TableView<moviesData> addMovies_tableView;
 
     @FXML
     private Button addMovies_updateBtn;
@@ -85,13 +92,13 @@ public class dashboardController implements Initializable {
     private Button availableMovie_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_genre;
+    private TableColumn<moviesData,String> availableMovie_col_genre;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_movieTitle;
+    private TableColumn<moviesData,String> availableMovie_col_movieTitle;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_showingDate;
+    private TableColumn<moviesData,String> availableMovie_col_showingDate; ////cant find the duration column
 
     @FXML
     private Label availableMovie_date;
@@ -248,6 +255,45 @@ public class dashboardController implements Initializable {
 
     private double x=0;
     private double y=0;
+
+    //database connection tools
+    private Connection connect;
+    private PreparedStatement prepare;
+    private Statement statement;
+    private ResultSet result;
+    public ObservableList<moviesData> addMoviesList(){
+        ObservableList<moviesData>listData= FXCollections.observableArrayList();
+        String sql ="SELECT * FROM movie";
+
+        connect=database.connectDb();
+
+        try{
+            prepare=connect.prepareStatement(sql);
+            result=prepare.executeQuery();
+
+            moviesData movD;
+            while(result.next()){
+                movD =new moviesData(result.getString("movieTitle"),
+                        result.getString("genre"),result.getString("duration"),
+                        result.getString("image"),result.getDate("date"));
+                listData.add(movD);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return listData;
+    }
+    private ObservableList<moviesData> listAddMovies;
+    public void showAddMoviesList(){
+        listAddMovies=addMoviesList();
+
+        addMovies_col_movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        addMovies_col_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        addMovies_col_duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        addMovies_col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+    }
 
     public void logout(){
         signout.getScene().getWindow().hide();
