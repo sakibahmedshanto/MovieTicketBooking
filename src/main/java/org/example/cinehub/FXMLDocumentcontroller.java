@@ -7,10 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.w3c.dom.events.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -205,16 +205,18 @@ public class FXMLDocumentcontroller implements Initializable {
                                         Stage stage=new Stage();
                                         Scene scene=new Scene(root);
                                         /*
-                                        root.setOnMousePressed((MouseEvent event) ->{
-                                                x = event.getSceneX();
-                                                y=event.getSceneY();
+
+                                        root.setOnMousePressed((javafx.scene.input.MouseEvent event) ->{
+                                                x= event.getSceneX();
+                                                y= event.getSceneY();
                                         });
+
 
                                         root.setOnMouseDragged((MouseEvent event) ->{
                                                 stage.setX(event.getScreenX() - x);
                                                 stage.setY(event.getScreenY() - y);
                                         });
-                                        */
+*/
 
                                         stage.initStyle(StageStyle.TRANSPARENT);
                                         stage.setScene(scene);
