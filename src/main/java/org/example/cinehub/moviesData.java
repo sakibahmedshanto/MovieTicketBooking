@@ -1,7 +1,5 @@
 package org.example.cinehub;
-
 import javafx.scene.chart.PieChart;
-
 import java.util.Date;
 
 public class moviesData {

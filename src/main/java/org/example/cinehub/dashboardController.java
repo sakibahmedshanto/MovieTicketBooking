@@ -8,25 +8,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
@@ -35,28 +33,28 @@ public class dashboardController implements Initializable {
     private Button addMovieBtn;
 
     @FXML
-    private TextField addMovies_Date;
-
-    @FXML
     private Button addMovies_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> addMovies_col_date;
+    private TableColumn<moviesData,String> addMovies_col_date;
 
     @FXML
-    private TableColumn<?, ?> addMovies_col_duration;
+    private TableColumn<moviesData,String> addMovies_col_duration;
 
     @FXML
-    private TableColumn<?, ?> addMovies_col_genre;
+    private TableColumn<moviesData,String> addMovies_col_genre;
 
     @FXML
-    private TableColumn<?, ?> addMovies_col_movieTitle;
+    private TableColumn<moviesData,String> addMovies_col_movieTitle;/////////
 
     @FXML
     private Button addMovies_deleteBtn;
 
     @FXML
     private TextField addMovies_duration;
+
+    @FXML
+    private DatePicker addMovies_Date;
 
     @FXML
     private AnchorPane addMovies_form;
@@ -92,13 +90,13 @@ public class dashboardController implements Initializable {
     private Button availableMovie_clearBtn;
 
     @FXML
-    private TableColumn<moviesData,String> availableMovie_col_genre;
+    private TableColumn<?, ?> availableMovie_col_genre;
 
     @FXML
-    private TableColumn<moviesData,String> availableMovie_col_movieTitle;
+    private TableColumn<?, ?> availableMovie_col_movieTitle;
 
     @FXML
-    private TableColumn<moviesData,String> availableMovie_col_showingDate; ////cant find the duration column
+    private TableColumn<?, ?> availableMovie_col_showingDate;
 
     @FXML
     private Label availableMovie_date;
@@ -253,6 +251,8 @@ public class dashboardController implements Initializable {
     @FXML
     private Label username;
 
+    private Image image;
+
     private double x=0;
     private double y=0;
 
@@ -261,6 +261,87 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    public void importImage(){
+        FileChooser open= new FileChooser();
+
+        open.setTitle("Open Image file");
+        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image File","*png","*jpg","*jpeg"));
+
+        Stage stage= (Stage) addMovies_form.getScene().getWindow();
+        File file= open.showOpenDialog(stage);
+
+        if(file!=null){
+            image =new Image(file.toURI().toString(),127,167,false,true);
+            addMovies_imageView.setImage(image);
+
+            getData.path=file.getAbsolutePath();
+        }
+    }
+
+    public void insertAddMovies(){
+        String sql1="SELECT * FROM movie WHERE movieTitle='" +addMovies_movieTitle.getText()+ "'";
+
+        connect=database.connectDb();
+        Alert alert;
+        try{
+            statement=connect.createStatement();
+            result=statement.executeQuery(sql1);
+
+            if(result.next()){
+                alert=new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText(addMovies_movieTitle.getText()+" was already existing!");
+                alert.showAndWait();
+            }else{
+                if(addMovies_movieTitle.getText().isEmpty() ||
+                        addMovies_genre.getText().isEmpty() ||
+                        addMovies_duration.getText().isEmpty() ||
+                        addMovies_imageView.getImage()==null ||
+                        addMovies_Date.getValue()==null){
+                    alert =new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please fill all blank fields!");
+                    alert.showAndWait();
+
+                }else{
+                    String sql="INSERT INTO movie (movieTitle,genre,duration,image,date) VALUES (?,?,?,?,?)";
+
+                    String uri=getData.path;
+                    uri=uri.replace("\\","\\\\");
+                    prepare=connect.prepareStatement(sql);
+                    prepare.setString(1,addMovies_movieTitle.getText());
+                    prepare.setString(2,addMovies_genre.getText());
+                    prepare.setString(3,addMovies_duration.getText());
+                    prepare.setString(4,uri);
+                    prepare.setString(5,String.valueOf(addMovies_Date.getValue()));
+
+                    prepare.execute();
+
+                    alert=new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully add new movie!");
+                    alert.showAndWait();
+
+                    clearAddMoviesList();
+                }
+            }
+            //insert same name movie in DB that exist before
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void clearAddMoviesList(){
+        addMovies_movieTitle.setText("");
+        addMovies_genre.setText("");
+        addMovies_imageView.setImage(null);
+        addMovies_Date.setValue(null);
+    }
+
     public ObservableList<moviesData> addMoviesList(){
         ObservableList<moviesData>listData= FXCollections.observableArrayList();
         String sql ="SELECT * FROM movie";
@@ -293,6 +374,29 @@ public class dashboardController implements Initializable {
         addMovies_col_duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         addMovies_col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        addMovies_tableView.setItems(listAddMovies);
+
+    }
+
+    public void selectAddMoviesList(){
+        moviesData movD=addMovies_tableView.getSelectionModel().getSelectedItem();
+        int num=addMovies_tableView.getSelectionModel().getSelectedIndex();
+
+        if((num-1)<-1){
+            return;
+        }
+        addMovies_movieTitle.setText(movD.getTitle());
+        addMovies_genre.setText(movD.getGenre());
+        addMovies_duration.setText(movD.getDuration());
+
+        String getDate= String.valueOf(movD.getDate());
+
+        //addMovies_Date.setValue(movD.getDate());
+
+        String uri="file:"+movD.getImage();
+
+        image=new Image(uri,127,167,false,true);
+        addMovies_imageView.setImage(image);
     }
 
     public void logout(){
@@ -409,6 +513,7 @@ public class dashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+            displayUsername();
+            showAddMoviesList();
     }
 }
