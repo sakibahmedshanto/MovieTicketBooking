@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
@@ -136,7 +137,7 @@
                                                 <ImageView fx:id="addMovies_imageView" fitHeight="167.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
-                                        <Button fx:id="addMovies_import" layoutX="131.0" layoutY="203.0" mnemonicParsing="false" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Import" />
+                                        <Button fx:id="addMovies_import" layoutX="131.0" layoutY="203.0" mnemonicParsing="false" onAction="#importImage" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Import" />
                                         <Label layoutX="24.0" layoutY="295.0" text="Movie Title :" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="188.0">
                                             <font>
                                                 <Font name="Microsoft Sans Serif" size="13.0" />
@@ -160,19 +161,19 @@
                                                 <Font name="Microsoft Sans Serif" size="13.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="addMovies_Date" layoutX="105.0" layoutY="386.0" prefHeight="25.0" prefWidth="171.0" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="106.0" />
-                                        <Button fx:id="addMovies_insertBtn" layoutX="11.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Insert" textFill="#fcfbfb">
+                                        <Button fx:id="addMovies_insertBtn" layoutX="11.0" layoutY="430.0" mnemonicParsing="false" onAction="#insertAddMovies" prefHeight="38.0" prefWidth="82.0" styleClass="insert-btn" stylesheets="@designDashboard.css" text="Insert" textFill="#fcfbfb">
                                             <font>
                                                 <Font size="14.0" />
                                             </font></Button>
                                         <Button fx:id="addMovies_updateBtn" layoutX="102.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
                                         <Button fx:id="addMovies_deleteBtn" layoutX="193.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
-                                        <Button fx:id="addMovies_clearBtn" layoutX="193.0" layoutY="479.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                                        <Button fx:id="addMovies_clearBtn" layoutX="193.0" layoutY="479.0" mnemonicParsing="false" onAction="#clearAddMoviesList" prefHeight="38.0" prefWidth="82.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                              <DatePicker fx:id="addMovies_Date" layoutX="106.0" layoutY="391.0" prefHeight="30.0" prefWidth="172.0" promptText="MM-DD-YYYY" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.topAnchor="386.0" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane layoutX="308.8" layoutY="14.0" prefHeight="622.0" prefWidth="654.0" styleClass="bg-white" stylesheets="@designDashboard.css" AnchorPane.leftAnchor="309.0">
                                     <children>
-                                        <TableView fx:id="addMovies_tableView" layoutX="12.0" layoutY="58.0" prefHeight="551.0" prefWidth="632.0">
+                                        <TableView fx:id="addMovies_tableView" layoutX="12.0" layoutY="58.0" onMouseClicked="#selectAddMoviesList" prefHeight="551.0" prefWidth="632.0">
                                             <columns>
                                                 <TableColumn fx:id="addMovies_col_movieTitle" prefWidth="209.59997272491455" text="Movie Title" />
                                                 <TableColumn fx:id="addMovies_col_genre" prefWidth="132.00001525878906" text="Genre" />
