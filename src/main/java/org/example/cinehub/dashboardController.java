@@ -25,6 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class dashboardController implements Initializable {
@@ -275,8 +277,24 @@ public class dashboardController implements Initializable {
             image =new Image(file.toURI().toString(),127,167,false,true);
             addMovies_imageView.setImage(image);
 
-            getData.path=file.getAbsolutePath();
+            //take image path
+            getData.path=file.getAbsolutePath();///getPath
         }
+    }
+
+    private int countId;
+
+    public void movieId(){
+        String sql="SELECT count(ID) FROM movie";
+        connect =database.connectDb();
+        try{
+            prepare=connect.prepareStatement(sql);
+            result= prepare.executeQuery();
+
+            if(result.next()) {
+                getData.movieId =result.getInt("count(id)");
+            }
+        }catch(Exception e){e.printStackTrace();}
     }
 
     public void insertAddMovies(){
@@ -307,16 +325,21 @@ public class dashboardController implements Initializable {
                     alert.showAndWait();
 
                 }else{
-                    String sql="INSERT INTO movie (movieTitle,genre,duration,image,date) VALUES (?,?,?,?,?)";
+                    String sql="INSERT INTO movie (ID,movieTitle,genre,duration,image,date) VALUES (?,?,?,?,?,?)";
 
                     String uri=getData.path;
                     uri=uri.replace("\\","\\\\");
+
+                    movieId();
+                    String mID=String.valueOf(getData.movieId+1);
+
                     prepare=connect.prepareStatement(sql);
-                    prepare.setString(1,addMovies_movieTitle.getText());
-                    prepare.setString(2,addMovies_genre.getText());
-                    prepare.setString(3,addMovies_duration.getText());
-                    prepare.setString(4,uri);
-                    prepare.setString(5,String.valueOf(addMovies_Date.getValue()));
+                    prepare.setString(1,mID);
+                    prepare.setString(2,addMovies_movieTitle.getText());
+                    prepare.setString(3,addMovies_genre.getText());
+                    prepare.setString(4,addMovies_duration.getText());
+                    prepare.setString(5,uri);
+                    prepare.setString(6,String.valueOf(addMovies_Date.getValue()));
 
                     prepare.execute();
 
@@ -327,6 +350,7 @@ public class dashboardController implements Initializable {
                     alert.showAndWait();
 
                     clearAddMoviesList();
+                    showAddMoviesList();
                 }
             }
             //insert same name movie in DB that exist before
@@ -335,9 +359,99 @@ public class dashboardController implements Initializable {
         }
     }
 
+    public void updateAddMovies(){
+        String uri=getData.path;
+        uri=uri.replace("\\","\\\\");
+
+        String sql="UPDATE movie SET movieTitle= '" +addMovies_movieTitle.getText()
+                + " ',genre= '"+addMovies_genre.getText()
+                + " ',duration='"+ addMovies_duration.getText()
+                + " ',image = '"+uri
+                + " ',date= '" + addMovies_Date.getValue()
+                + " ' WHERE ID= '" +String.valueOf(getData.movieId)+ "' ";
+
+        connect= database.connectDb();
+
+        try{
+            statement=connect.createStatement();
+            Alert alert;
+
+            if(addMovies_movieTitle.getText().isEmpty()
+                    ||addMovies_genre.getText().isEmpty()
+                    ||addMovies_duration.getText().isEmpty()
+                    ||addMovies_imageView.getImage()==null
+                    ||addMovies_Date.getValue()==null)
+            {
+                alert=new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the movie first");
+                alert.showAndWait();
+            }else{
+                statement.executeUpdate(sql);
+
+                alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully update "+addMovies_movieTitle.getText());
+                alert.showAndWait();
+                showAddMoviesList();
+                clearAddMoviesList();
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAddMovies(){
+        String sql= "DELETE FROM movie WHERE movieTitle='" +addMovies_movieTitle.getText() +"'";
+        Alert alert;
+
+        connect=database.connectDb();
+        try{
+            statement=connect.createStatement();
+            if(addMovies_movieTitle.getText().isEmpty()
+                    ||addMovies_genre.getText().isEmpty()
+                    ||addMovies_duration.getText().isEmpty()
+                    ||addMovies_Date.getValue()==null
+                    ||addMovies_imageView.getImage()==null){
+                alert=new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the movie first");
+                alert.showAndWait();
+            }else{
+                alert=new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to delete "+addMovies_movieTitle.getText()+" ?");
+
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(ButtonType.OK.equals(option.get())){
+
+                    statement.executeUpdate(sql);
+
+                    showAddMoviesList();
+                    clearAddMoviesList();
+
+                    alert=new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+                }else{
+                    return;
+                }
+            }
+        }catch (Exception e){e.printStackTrace();}
+    }
+
     public void clearAddMoviesList(){
         addMovies_movieTitle.setText("");
         addMovies_genre.setText("");
+        addMovies_duration.setText("");
         addMovies_imageView.setImage(null);
         addMovies_Date.setValue(null);
     }
@@ -354,9 +468,12 @@ public class dashboardController implements Initializable {
 
             moviesData movD;
             while(result.next()){
-                movD =new moviesData(result.getString("movieTitle"),
-                        result.getString("genre"),result.getString("duration"),
-                        result.getString("image"),result.getDate("date"));
+                movD =new moviesData(result.getInt("id"),
+                        result.getString("movieTitle"),
+                        result.getString("genre"),
+                        result.getString("duration"),
+                        result.getString("image"),
+                        result.getDate("date"));
                 listData.add(movD);
             }
         }
@@ -385,19 +502,28 @@ public class dashboardController implements Initializable {
         if((num-1)<-1){
             return;
         }
+
+        getData.path=movD.getImage();
+        getData.movieId=movD.getId();
+
         addMovies_movieTitle.setText(movD.getTitle());
         addMovies_genre.setText(movD.getGenre());
         addMovies_duration.setText(movD.getDuration());
 
         String getDate= String.valueOf(movD.getDate());
 
-        //addMovies_Date.setValue(movD.getDate());
-
         String uri="file:"+movD.getImage();
 
         image=new Image(uri,127,167,false,true);
         addMovies_imageView.setImage(image);
+
+        //addMovies_Date.setValue(LocalDate.of());
+        addMovies_Date.setValue(movD.getDate().toLocalDate());
+
+
+
     }
+
 
     public void logout(){
         signout.getScene().getWindow().hide();

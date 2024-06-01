@@ -165,8 +165,8 @@
                                             <font>
                                                 <Font size="14.0" />
                                             </font></Button>
-                                        <Button fx:id="addMovies_updateBtn" layoutX="102.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
-                                        <Button fx:id="addMovies_deleteBtn" layoutX="193.0" layoutY="430.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
+                                        <Button fx:id="addMovies_updateBtn" layoutX="102.0" layoutY="430.0" mnemonicParsing="false" onAction="#updateAddMovies" prefHeight="38.0" prefWidth="82.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
+                                        <Button fx:id="addMovies_deleteBtn" layoutX="193.0" layoutY="430.0" mnemonicParsing="false" onAction="#deleteAddMovies" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
                                         <Button fx:id="addMovies_clearBtn" layoutX="193.0" layoutY="479.0" mnemonicParsing="false" onAction="#clearAddMoviesList" prefHeight="38.0" prefWidth="82.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
                               <DatePicker fx:id="addMovies_Date" layoutX="106.0" layoutY="391.0" prefHeight="30.0" prefWidth="172.0" promptText="MM-DD-YYYY" styleClass="add-textfield" stylesheets="@designDashboard.css" AnchorPane.topAnchor="386.0" />
                                     </children>
