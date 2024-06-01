@@ -181,7 +181,7 @@
                                                 <TableColumn fx:id="addMovies_col_date" prefWidth="172.0" text="Published Date" />
                                             </columns>
                                         </TableView>
-                                        <TextField fx:id="addMovies_search" layoutX="14.0" layoutY="22.0" promptText="Search" styleClass="search" stylesheets="@designDashboard.css" />
+                                        <TextField fx:id="addMovies_search" layoutX="14.0" layoutY="22.0" onKeyTyped="#searchAddMovies" promptText="Search" styleClass="search" stylesheets="@designDashboard.css" />
                                     </children></AnchorPane>
                             </children>
                         </AnchorPane>
@@ -196,7 +196,7 @@
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="availableMovie_movieTitle" layoutX="94.0" layoutY="14.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                <Label fx:id="availableMovie_movieTitle" layoutX="94.0" layoutY="14.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css">
                                                     <font>
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>
@@ -206,7 +206,7 @@
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="availableMovie_genre" layoutX="94.0" layoutY="57.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                <Label fx:id="availableMovie_genre" layoutX="94.0" layoutY="57.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css">
                                                     <font>
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>
@@ -216,7 +216,7 @@
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="availableMovie_date" layoutX="94.0" layoutY="100.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css" text="Movie Title :">
+                                                <Label fx:id="availableMovie_date" layoutX="94.0" layoutY="100.0" prefHeight="16.0" prefWidth="162.0" styleClass="label-info" stylesheets="@designDashboard.css">
                                                     <font>
                                                         <Font name="Microsoft Sans Serif" size="14.0" />
                                                     </font>

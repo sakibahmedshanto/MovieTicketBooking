@@ -2,6 +2,8 @@ package org.example.cinehub;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -263,6 +265,37 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+    
+
+    public void searchAddMovies(){
+
+        FilteredList<moviesData> filter = new FilteredList<>(listAddMovies, e -> true);
+        addMovies_search.textProperty().addListener((observable, oldValue, newValue) ->{
+            filter.setPredicate(predicateMoviesData -> {
+
+                if(newValue.isEmpty() || newValue == null) {
+                    clearAddMoviesList();
+                    return true;
+                }
+                String keySearch = newValue.toLowerCase();
+
+                if(predicateMoviesData.getTitle().toLowerCase().contains(keySearch)){
+                    return true;
+                }else if(predicateMoviesData.getGenre().toLowerCase().contains(keySearch)){
+                    return true;
+                }else if(predicateMoviesData.getDuration().toLowerCase().contains(keySearch)){
+                    return true;
+                }else if(predicateMoviesData.getDate().toString().contains(keySearch)){
+                    return true;
+                }
+
+                return false;
+            });
+            SortedList<moviesData>sortData= new SortedList<>(filter);
+            sortData.comparatorProperty().bind(addMovies_tableView.comparatorProperty());
+            addMovies_tableView.setItems(sortData);
+        } );
+    }
 
     public void importImage(){
         FileChooser open= new FileChooser();
