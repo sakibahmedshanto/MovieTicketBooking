@@ -94,13 +94,13 @@ public class dashboardController implements Initializable {
     private Button availableMovie_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_genre;
+    private TableColumn<moviesData, String> availableMovie_col_genre;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_movieTitle;
+    private TableColumn<moviesData, String> availableMovie_col_movieTitle;
 
     @FXML
-    private TableColumn<?, ?> availableMovie_col_showingDate;
+    private TableColumn<moviesData, String> availableMovie_col_showingDate;
 
     @FXML
     private Label availableMovie_date;
@@ -118,7 +118,7 @@ public class dashboardController implements Initializable {
     private Label availableMovie_normalClass_price;
 
     @FXML
-    private Spinner<?> availableMovie_normalClass_quantity;
+    private Spinner<Integer> availableMovie_normalClass_quantity;
 
     @FXML
     private Button availableMovie_receiptBtn;
@@ -130,10 +130,10 @@ public class dashboardController implements Initializable {
     private Label availableMovie_specialClass_price;
 
     @FXML
-    private Spinner<?> availableMovie_specialClass_quantity;
+    private Spinner<Integer> availableMovie_specialClass_quantity;
 
     @FXML
-    private TableView<?> availableMovie_tableView;
+    private TableView<moviesData> availableMovie_tableView;
 
     @FXML
     private Label availableMovie_title;
@@ -265,7 +265,128 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
-    
+
+    // lets proceed to available movies
+
+    private SpinnerValueFactory<Integer> spinner1;
+    private SpinnerValueFactory<Integer> spinner2;
+
+    private float price1=0;
+    private float price2=0;
+    private float total=0;
+
+    private int qty1=0;
+    private  int qty2=0;
+
+
+    public  void showSpinnerValue(){
+        spinner1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,0);
+        spinner2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,1);
+
+        availableMovie_specialClass_quantity.setValueFactory(spinner1);
+        availableMovie_normalClass_quantity.setValueFactory(spinner2);
+
+    }
+
+    public  void getSpinnerValue(MouseEvent event){
+        qty1 = availableMovie_specialClass_quantity.getValue();
+        qty2 =availableMovie_normalClass_quantity.getValue();
+
+        price1 = (qty1 * 1000);
+        price2 = (qty2 * 500);
+
+        total =price1 +price2;
+
+        availableMovie_specialClass_price.setText("$"+String.valueOf(price1));
+        availableMovie_normalClass_price.setText("$"+String.valueOf(price2));
+    }
+
+
+
+
+    public ObservableList<moviesData> availableMoviesList ( ) {
+        ObservableList<moviesData> listAvMovies = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM movie where current = 'Showing'";
+        connect = database.connectDb();
+        try {
+            prepare =connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            moviesData movD;
+            while (result.next()){
+
+                movD= new moviesData(result.getInt("id"),
+                        result.getString("movieTitle"),
+                        result.getString("genre"),
+                        result.getString("duration"),
+                        result.getString("image"),
+                        result.getDate("date"),
+                        result.getString("current"));
+                listAvMovies.add(movD);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return  listAvMovies;
+    }
+
+    private ObservableList<moviesData> availableMoviesList;
+    public  void showAvailableMovies(){
+        availableMoviesList = availableMoviesList();
+        availableMovie_col_movieTitle.setCellValueFactory(new PropertyValueFactory<>("id"));
+        availableMovie_col_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        availableMovie_col_showingDate.setCellValueFactory((new PropertyValueFactory<>("date")));
+        availableMovie_col_showingDate.setCellValueFactory((new PropertyValueFactory<>("date")));
+
+        availableMovie_tableView.setItems(availableMoviesList);
+
+    }
+
+    public void selectAvai1ab1eMovies ( ) {
+        moviesData movD = availableMovie_tableView.getSelectionModel().getSelectedItem();
+        int num = availableMovie_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num-1)<-1) {
+            return;
+        }
+
+        availableMovie_movieTitle.setText(movD.getTitle());
+        availableMovie_genre.setText(movD.getGenre());
+        availableMovie_date.setText(String.valueOf(movD.getDate()));
+        getData.path = movD.getImage();
+        getData.title =movD.getTitle();
+    }
+
+    public void selectMovie(){
+        Alert alert;
+
+        //check if you have selected the movie
+        if(availableMovie_title.getText().isEmpty()){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText (null) ;
+            alert.setContentText ("Please select the movie first");
+            alert.showAndWait();
+        }
+        else {
+            String uri = "file:"+getData.path;
+            image = new Image(uri,136,180,false,true);
+            availableMovie_imageView.setImage(image);
+
+            availableMovie_title.setText(getData.title);
+
+            //clear text
+            availableMovie_movieTitle.setText("");
+            availableMovie_genre.setText("");
+            availableMovie_date.setText("");
+        }
+
+    }
+
+    // end of shantos available movies
 
     public void searchAddMovies(){
 
@@ -628,6 +749,7 @@ public class dashboardController implements Initializable {
             availableMoviesBtn.setStyle("-fx-background-color:#ae2d3c;");
             editScreeningBtn.setStyle("-fx-background-color:transparent;");
             customerBtn.setStyle("-fx-background-color:transparent;");
+            showAvailableMovies();
         }
         else if(event.getSource()==editScreeningBtn){
             dashboard_form.setVisible(false);
@@ -674,5 +796,11 @@ public class dashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
             displayUsername();
             showAddMoviesList();
+
+            // to show available movies
+            showAvailableMovies();
+
+            showSpinnerValue();
+            //shanto
     }
 }
