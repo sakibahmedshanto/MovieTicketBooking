@@ -128,7 +128,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane id="AddMovie_form" fx:id="addMovies_form" layoutX="76.0" layoutY="147.0" prefHeight="647.2" prefWidth="941.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane id="AddMovie_form" fx:id="addMovies_form" layoutX="76.0" layoutY="147.0" prefHeight="647.2" prefWidth="941.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="286.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                                     <children>
@@ -185,7 +185,7 @@
                                     </children></AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane id="AvailableMovies_form" fx:id="availableMovies_form" layoutX="54.0" layoutY="50.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane id="AvailableMovies_form" fx:id="availableMovies_form" layoutX="54.0" layoutY="50.0" prefHeight="647.2" prefWidth="963.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="934.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                                     <children>
@@ -277,8 +277,8 @@
                                     <Font name="Microsoft Sans Serif" size="17.0" />
                                  </font>
                               </Label>
-                              <Spinner fx:id="availableMovie_specialClass_quantity" layoutX="432.0" layoutY="109.0" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
-                              <Spinner fx:id="availableMovie_normalClass_quantity" layoutX="432.0" layoutY="150.0" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
+                              <Spinner fx:id="availableMovie_specialClass_quantity" layoutX="432.0" layoutY="109.0" onMouseClicked="#getSpinnerValue" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
+                              <Spinner fx:id="availableMovie_normalClass_quantity" layoutX="432.0" layoutY="150.0" onMouseClicked="#getSpinnerValue" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
                               <Label fx:id="availableMovie_specialClass_price" layoutX="611.0" layoutY="111.0" text="BDT 0.0">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="16.0" />
