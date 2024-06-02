@@ -128,7 +128,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane id="AddMovie_form" fx:id="addMovies_form" layoutX="76.0" layoutY="147.0" prefHeight="647.2" prefWidth="941.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane id="AddMovie_form" fx:id="addMovies_form" layoutX="76.0" layoutY="147.0" prefHeight="647.2" prefWidth="941.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="286.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                                     <children>
@@ -304,7 +304,7 @@
                               <Button fx:id="availableMovie_clearBtn" layoutX="296.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
                                     </children></AnchorPane>
                             </children></AnchorPane>
-                  <AnchorPane id="editScreening_form" fx:id="editScreening_form" layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane id="editScreening_form" fx:id="editScreening_form" layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="250.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
@@ -323,24 +323,24 @@
                                     <Font name="Microsoft Sans Serif" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="editScreening_current" layoutX="93.0" layoutY="308.0" prefHeight="31.0" prefWidth="142.0" promptText="Choose" styleClass="combo-box" stylesheets="@designDashboard.css" />
+                              <ComboBox fx:id="editScreening_current" layoutX="93.0" layoutY="308.0" onAction="#comboBox" prefHeight="31.0" prefWidth="142.0" promptText="Choose" styleClass="combo-box" stylesheets="@designDashboard.css" />
                               <Label layoutX="29.0" layoutY="314.0" text="Current :">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="editScreening_deleteBtn" layoutX="155.0" layoutY="365.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="78.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
-                              <Button fx:id="editScreening_updateBtn" layoutX="29.0" layoutY="365.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="78.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
+                              <Button fx:id="editScreening_deleteBtn" layoutX="155.0" layoutY="365.0" mnemonicParsing="false" onAction="#clearEditScreening" prefHeight="37.0" prefWidth="78.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                              <Button fx:id="editScreening_updateBtn" layoutX="29.0" layoutY="365.0" mnemonicParsing="false" onAction="#updateEditScreening" prefHeight="37.0" prefWidth="78.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="280.0" layoutY="14.0" prefHeight="622.0" prefWidth="670.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
-                              <TextField fx:id="editScreening_search" layoutX="23.0" layoutY="20.0" prefHeight="27.0" prefWidth="266.0" promptText="Search" styleClass="search" stylesheets="@designDashboard.css" />
-                              <TableView fx:id="editScreening_tableView" layoutX="11.0" layoutY="62.0" prefHeight="554.0" prefWidth="650.0">
+                              <TextField fx:id="editScreening_search" layoutX="23.0" layoutY="20.0" onKeyTyped="#searchEditScreening" prefHeight="27.0" prefWidth="266.0" promptText="Search" styleClass="search" stylesheets="@designDashboard.css" />
+                              <TableView fx:id="editScreening_tableView" layoutX="11.0" layoutY="62.0" onMouseClicked="#selectEditScreening" prefHeight="554.0" prefWidth="650.0">
                                 <columns>
                                   <TableColumn fx:id="editScreening_col_movieTitle" prefWidth="221.60003662109375" text="Movie Title" />
-                                  <TableColumn fx:id="editScreening_col_genre" minWidth="0.0" prefWidth="133.5999755859375" text="Genre" />
-                                    <TableColumn fx:id="editScreening_col_duration" minWidth="0.0" prefWidth="136.79998779296875" text="Duration" />
+                                  <TableColumn fx:id="editScreening_col_genre" minWidth="0.0" prefWidth="184.0" text="Genre" />
+                                    <TableColumn fx:id="editScreening_col_duration" minWidth="0.0" prefWidth="86.4000244140625" text="Duration" />
                                     <TableColumn fx:id="editScreening_col_current" minWidth="0.0" prefWidth="150.40008544921875" text="Current" />
                                 </columns>
                               </TableView>
