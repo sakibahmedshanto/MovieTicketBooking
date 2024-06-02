@@ -254,3 +254,22 @@
     -fx-border-width:.8px;
     -fx-border-radius:5px;
 }
+
+.button-seat {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-text-fill: white;
+}
+
+.button-seat:hover {
+    -fx-background-color: #45a049;
+}
+
+.button-seat-selected {
+    -fx-background-color: #FF9800; /* Orange */
+    -fx-text-fill: white;
+}
+
+.button-seat-occupied {
+    -fx-background-color: #f44336; /* Red */
+    -fx-text-fill: white;
+}
