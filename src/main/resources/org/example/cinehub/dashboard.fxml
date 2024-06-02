@@ -5,13 +5,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="691.0" prefWidth="1141.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cinehub.dashboardController">
@@ -277,8 +277,6 @@
                                                 <Font name="Microsoft Sans Serif" size="17.0" />
                                             </font>
                                         </Label>
-                                        <Spinner fx:id="availableMovie_specialClass_quantity" layoutX="432.0" layoutY="109.0" onMouseClicked="#getSpinnerValue" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
-                                        <Spinner fx:id="availableMovie_normalClass_quantity" layoutX="432.0" layoutY="150.0" onMouseClicked="#getSpinnerValue" prefHeight="26.0" prefWidth="98.0" stylesheets="@designDashboard.css" />
                                         <Label fx:id="availableMovie_specialClass_price" layoutX="611.0" layoutY="111.0" text="BDT 0.0">
                                             <font>
                                                 <Font name="Microsoft Sans Serif" size="16.0" />
@@ -302,6 +300,17 @@
                                         <Button fx:id="availableMovie_buyBtn" layoutX="833.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="buy-btn" stylesheets="@designDashboard.css" text="Buy" />
                                         <Button fx:id="availableMovie_receiptBtn" layoutX="736.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="receipt-btn" stylesheets="@designDashboard.css" text="Receipt" />
                                         <Button fx:id="availableMovie_clearBtn" layoutX="296.0" layoutY="243.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Clear" />
+                              <Button fx:id="availableMovies_seatsBtn" layoutX="394.0" layoutY="243.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="38.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@designDashboard.css" text="Seat" />
+                              <Label fx:id="special_quantity_label" layoutX="448.0" layoutY="111.0" prefHeight="23.0" prefWidth="62.0" text="0">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="normal_quantity_label" layoutX="448.0" layoutY="152.0" prefHeight="23.0" prefWidth="62.0" text="0">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
                                     </children></AnchorPane>
                             </children></AnchorPane>
                         <AnchorPane id="editScreening_form" fx:id="editScreening_form" layoutX="32.0" layoutY="56.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -404,6 +413,13 @@
                                     </children></AnchorPane>
                             </children>
                         </AnchorPane>
+                  <AnchorPane fx:id="seat_form" layoutX="44.0" layoutY="90.0" prefHeight="647.2" prefWidth="963.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                         <GridPane fx:id="gridSeats" hgap="10" layoutX="50" layoutY="50" vgap="10">
+                             <!-- Buttons will be added dynamically -->
+                         </GridPane>
+                     </children>
+                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </center>

@@ -16,16 +16,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -39,7 +37,15 @@ public class dashboardController implements Initializable {
     private Button addMovieBtn;
 
     @FXML
+    private AnchorPane seat_form;
+
+    @FXML
+    private Button availableMovies_seatsBtn;
+
+
+    @FXML
     private Button addMovies_clearBtn;
+
 
     @FXML
     private TableColumn<moviesData,String> addMovies_col_date;
@@ -257,6 +263,10 @@ public class dashboardController implements Initializable {
     @FXML
     private Label username;
 
+    //shanto
+    @FXML Label special_quantity_label;
+    @FXML Label normal_quantity_label;
+    //shanto
     private Image image;
 
     private double x=0;
@@ -267,6 +277,118 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+
+    @FXML
+    private GridPane gridSeats;
+
+    private final int NUM_ROWS = 5;
+    private final int NUM_COLS = 8;
+    private boolean[][] seatAvailability = new boolean[NUM_ROWS+1][NUM_COLS+1];
+
+    @FXML
+    private void initi(int movieId) { // Modify method signature to accept movieId
+        String query = "SELECT roww, columnn, is_available FROM seats WHERE movie_id = ?";
+        try (Connection conn = database.connectDb();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, movieId); // Set movieId parameter in the query
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int roww = rs.getInt("roww");
+                int col = rs.getInt("columnn");
+                boolean isAvailable = rs.getBoolean("is_available");
+                Button seat = new Button();
+                seat.getStyleClass().add(isAvailable ? "button-seat" : "button-seat-occupied");
+                seat.setPrefSize(60, 60);
+                seat.setText("Row " + roww + " Col " + col);
+                seat.setOnAction(e -> handleSeatSelection(roww, col, seat, isAvailable,movieId)); // Pass movieId to handleSeatSelection
+                gridSeats.add(seat, col, roww);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private SpinnerValueFactory<Integer> spinner1;
+    private SpinnerValueFactory<Integer> spinner2;
+
+    private float price1=0;
+    private float price2=0;
+    private float total=0;
+
+    private int qty1=0;
+    private  int qty2=0;
+
+    public void show_ticket_quantity(){
+        special_quantity_label.setText(String.valueOf(qty1));
+        normal_quantity_label.setText(String.valueOf(qty2));
+
+        price1 = (qty1 * 1000);
+        price2 = (qty2 * 500);
+
+        total =price1 +price2;
+
+        availableMovie_specialClass_price.setText("$"+String.valueOf(price1));
+        availableMovie_normalClass_price.setText("$"+String.valueOf(price2));
+        availableMovie_total.setText("$"+String.valueOf(total));
+    }
+    private void handleSeatSelection(int roww, int col, Button seat, boolean isAvailable,int movieId) {
+        if (!isAvailable) {
+            System.out.println("Seat is already booked.");
+            return;
+        }
+        else{
+
+            if(! seatAvailability[roww][col] ){
+                String updateQuery = "UPDATE seats SET is_available = false WHERE roww = ? AND columnn = ? AND movie_id = ?";
+                try (Connection conn = database.connectDb();
+                     PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+                    stmt.setInt(1, roww);
+                    stmt.setInt(2, col);
+                    stmt.setInt(3, movieId);
+                    int affectedRows = stmt.executeUpdate();
+                    if (affectedRows > 0) {
+                        if(roww > 2 ){
+                            qty2++;
+                        }
+                        else qty1++;
+                        System.out.println("the quantity of q1 and q 2 is "+qty1 +" and " + qty2);
+                        show_ticket_quantity();
+                        seat.getStyleClass().clear();
+                        seat.getStyleClass().add("button-seat-selected");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                seatAvailability[roww][col]= true;
+            }
+            else{
+                String updateQuery = "UPDATE seats SET is_available = true WHERE roww = ? AND columnn = ? AND movie_id = ?";
+                try (Connection conn = database.connectDb();
+                     PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+                    stmt.setInt(1, roww);
+                    stmt.setInt(2, col);
+                    stmt.setInt(3, movieId);
+                    int affectedRows = stmt.executeUpdate();
+                    if (affectedRows > 0) {
+                        if(roww > 2 ){
+                            qty2--;
+                        }
+                        else qty1--;
+                        System.out.println("the quantity of q1 and q 2 is "+qty1 +" and " + qty2);
+                        show_ticket_quantity();
+                        seat.getStyleClass().clear();
+                        seat.getStyleClass().add("button-seat");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                seatAvailability[roww][col]=false;
+            }
+
+        }
+
+    }
 
     private String[] currentList={"Showing","End Showing"};
 
@@ -401,38 +523,29 @@ public class dashboardController implements Initializable {
 
     // lets proceed to available movies
 
-    private SpinnerValueFactory<Integer> spinner1;
-    private SpinnerValueFactory<Integer> spinner2;
 
-    private float price1=0;
-    private float price2=0;
-    private float total=0;
+//    public  void showSpinnerValue(){
+//        spinner1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,qty1);
+//        spinner2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,qty2);
+//
+//        availableMovie_specialClass_quantity.setValueFactory(spinner1);
+//        availableMovie_normalClass_quantity.setValueFactory(spinner2);
+//
+//    }
 
-    private int qty1=0;
-    private  int qty2=0;
-
-
-    public  void showSpinnerValue(){
-        spinner1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,0);
-        spinner2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,0);
-
-        availableMovie_specialClass_quantity.setValueFactory(spinner1);
-        availableMovie_normalClass_quantity.setValueFactory(spinner2);
-
-    }
-
-    public  void getSpinnerValue(MouseEvent event){
-        qty1 = availableMovie_specialClass_quantity.getValue();
-        qty2 =availableMovie_normalClass_quantity.getValue();
-
-        price1 = (qty1 * 1000);
-        price2 = (qty2 * 500);
-
-        total =price1 +price2;
-
-        availableMovie_specialClass_price.setText("$"+String.valueOf(price1));
-        availableMovie_normalClass_price.setText("$"+String.valueOf(price2));
-    }
+//    public  void getSpinnerValue(MouseEvent event){
+//        qty1 = availableMovie_specialClass_quantity.getValue();
+//        qty2 =availableMovie_normalClass_quantity.getValue();
+//
+//        price1 = (qty1 * 1000);
+//        price2 = (qty2 * 500);
+//
+//        total =price1 +price2;
+//
+//        availableMovie_specialClass_price.setText("$"+String.valueOf(price1));
+//        availableMovie_normalClass_price.setText("$"+String.valueOf(price2));
+//
+//    }
 
 
 
@@ -848,12 +961,14 @@ public class dashboardController implements Initializable {
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(false);
             customer_form.setVisible(false);
+            seat_form.setVisible(false);
 
             dashboardBtn.setStyle("-fx-background-color:#ae2d3c;");
             addMovieBtn.setStyle("-fx-background-color:transparent;");
             availableMoviesBtn.setStyle("-fx-background-color:transparent;");
             editScreeningBtn.setStyle("-fx-background-color:transparent;");
             customerBtn.setStyle("-fx-background-color:transparent;");
+
         }
 
         else if(event.getSource()==addMovieBtn){
@@ -862,12 +977,14 @@ public class dashboardController implements Initializable {
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(false);
             customer_form.setVisible(false);
+            seat_form.setVisible(false);
 
             dashboardBtn.setStyle("-fx-background-color:transparent;");
             addMovieBtn.setStyle("-fx-background-color:#ae2d3c;");
             availableMoviesBtn.setStyle("-fx-background-color:transparent;");
             editScreeningBtn.setStyle("-fx-background-color:transparent;");
             customerBtn.setStyle("-fx-background-color:transparent;");
+
         }
         else if(event.getSource()==availableMoviesBtn){
             dashboard_form.setVisible(false);
@@ -875,6 +992,7 @@ public class dashboardController implements Initializable {
             availableMovies_form.setVisible(true);
             editScreening_form.setVisible(false);
             customer_form.setVisible(false);
+            seat_form.setVisible(false);
 
             dashboardBtn.setStyle("-fx-background-color:transparent;");
             addMovieBtn.setStyle("-fx-background-color:transparent;");
@@ -889,12 +1007,14 @@ public class dashboardController implements Initializable {
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(true);
             customer_form.setVisible(false);
+            seat_form.setVisible(false);
 
             dashboardBtn.setStyle("-fx-background-color:transparent;");
             addMovieBtn.setStyle("-fx-background-color:transparent;");
             availableMoviesBtn.setStyle("-fx-background-color:transparent;");
             editScreeningBtn.setStyle("-fx-background-color:#ae2d3c;");
             customerBtn.setStyle("-fx-background-color:transparent;");
+
         }
         else if(event.getSource()==customerBtn){
             dashboard_form.setVisible(false);
@@ -902,12 +1022,33 @@ public class dashboardController implements Initializable {
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(false);
             customer_form.setVisible(true);
+            seat_form.setVisible(false);
 
             dashboardBtn.setStyle("-fx-background-color:transparent;");
             addMovieBtn.setStyle("-fx-background-color:transparent;");
             availableMoviesBtn.setStyle("-fx-background-color:transparent;");
             editScreeningBtn.setStyle("-fx-background-color:transparent;");
             customerBtn.setStyle("-fx-background-color:#ae2d3c;");
+
+
+        }
+        else if(event.getSource()==availableMovies_seatsBtn){
+            dashboard_form.setVisible(false);
+            addMovies_form.setVisible(false);
+            availableMovies_form.setVisible(false);
+            editScreening_form.setVisible(false);
+            customer_form.setVisible(false);
+            seat_form.setVisible(true);
+
+           // availableMovies_seatsBtn.setStyle("-fx-background-color:#ae2d3c;");
+            dashboardBtn.setStyle("-fx-background-color:transparent;");
+            addMovieBtn.setStyle("-fx-background-color:transparent;");
+            availableMoviesBtn.setStyle("-fx-background-color:transparent;");
+            editScreeningBtn.setStyle("-fx-background-color:transparent;");
+            customerBtn.setStyle("-fx-background-color:transparent;");
+
+            moviesData movD = availableMovie_tableView.getSelectionModel().getSelectedItem();
+            initi(movD.getId());
         }
     }
     public void displayUsername(){
@@ -936,7 +1077,9 @@ public class dashboardController implements Initializable {
         // to show available movies
         showAvailableMovies();
 
-        showSpinnerValue();
+
+
+      //  showSpinnerValue();
         //shanto
 
     }
